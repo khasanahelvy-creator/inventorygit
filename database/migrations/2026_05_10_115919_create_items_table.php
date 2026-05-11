@@ -6,19 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
 public function up() {
-Schema::create('items', function (Blueprint $table) {
+Schema::create('categories', function (Blueprint $table)
+{
 $table->id();
-$table->string('name');
-$table->unsignedInteger('quantity')->default(0);
-$table->decimal('price', 12, 2)->default(0);
-$table->foreignId('category_id')
-->constrained()
-
-->onDelete('cascade');
+$table->string('name')->unique();
 $table->timestamps();
 });
 }
 public function down() {
-Schema::dropIfExists('items');
+Schema::dropIfExists('categories');
 }
 };
