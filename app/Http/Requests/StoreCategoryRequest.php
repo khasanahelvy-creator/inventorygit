@@ -1,26 +1,32 @@
 <?php
-
 namespace App\Http\Requests;
+<<<feature/auth-sanctum
 use Illuminate\Contracts\Validation\ValidationRule;
+main
 use Illuminate\Foundation\Http\FormRequest;
-
-class StoreCategoryRequest extends FormRequest {
-
-    public function authorize() {
+class StoreCategoryRequest extends FormRequest
+{
+    public function authorize()
+    {
         return true;
     }
-
-    public function rules() {
+    protected function prepareForValidation()
+    {
+        $input = $this->all();
+        array_walk($input, function (&$val) {
+            if (is_string($val)) {
+                $val = trim(strip_tags($val));
+            }
+        });
+        $this->merge($input);
+    }
+    public function rules()
+    {
         return [
-            'name' => 'required|string|unique:categories,name'
+            "name" => "required|string|max:255",
         ];
     }
-
-    public function messages() {
-        return [
-            'name.unique' => 'Nama kategori sudah ada.'
-        ];
-    }
+feature/auth-sanctum
 }
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -44,4 +50,5 @@ class StoreCategoryRequest extends FormRequest
             'name.unique' => 'Nama kategori sudah ada.' // [cite: 107]
         ];
     }
+ main
 }
